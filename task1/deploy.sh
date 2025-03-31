@@ -20,12 +20,12 @@ echo "4. Ожидание готовности Pod..."
 kubectl wait --for=condition=Ready pod/app-pod --timeout=60s
 
 echo "5. Тестирование API тестового Pod..."
-kubectl port-forward pod/app-pod 8081:8080 &
+kubectl port-forward pod/app-pod 8080:8080 &
 
-curl http://localhost:8081/
-curl http://localhost:8081/status
-curl -X POST http://localhost:8081/log -d '{"message": "Test log"}'
-curl http://localhost:8081/logs
+curl http://localhost:8080/
+curl http://localhost:8080/status
+curl -X POST http://localhost:8080/log -d '{"message": "Test log"}' -H "Content-Type: application/json"
+curl http://localhost:8080/logs
 
 echo "6. Развертывание Deployment с 3 репликами..."
 kubectl apply -f k8s/deployment.yaml
@@ -44,7 +44,6 @@ kubectl apply -f k8s/cronjob.yaml
 
 echo "==== Система успешно развернута! ===="
 echo "Для тестирования выполните:"
-echo "  kubectl port-forward svc/app-service 8080:80"
 echo "  curl http://localhost:8080/"
 echo "  curl http://localhost:8080/status"
 echo "  curl -X POST http://localhost:8080/log -d '{\"message\": \"Test log\"}'"
