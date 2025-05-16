@@ -1,19 +1,33 @@
 # Development_Workshop
 
-Для второго задания:
+## Для второго задания:
+
 minikube start --memory=4096 --cpus=2
+
 eval $(minikube docker-env)
+
 cd /path/to/your/project
+
 curl -L https://istio.io/downloadIstio | sh -
+
 cd istio-* && export PATH=$PWD/bin:$PATH && cd ..
+
 chmod +x deploy.sh
+
 ./deploy.sh
-# Далее — в другом окне
+
+### Далее — в другом окне
+
 minikube tunnel
+
 kubectl get svc -n istio-system istio-ingressgateway
-# Для теста
+
+### Для теста
+
 curl http://127.0.0.1/
+
 curl -X POST http://127.0.0.1/log -d '{"message": "Test"}' -H "Content-Type: application/json"
+
 curl http://127.0.0.1/wrong
 
 # Запуск:
