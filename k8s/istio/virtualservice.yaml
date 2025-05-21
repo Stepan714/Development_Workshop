@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: app-virtualservice
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - app-gateway
+  http:
+    - match:
+        - uri:
+            exact: /log
+          method:
+            exact: POST
+      route:
+        - destination:
+            host: app-service
+            port:
+              number: 80
+      fault:
+        delay:
+          fixedDelay: 2s
+          percentage:
+            value: 100
+      timeout: 1s
+      retries:
+        attempts: 2
+        perTryTimeout: 1s
+
+    - route:
+        - destination:
+            host: app-service
+            port:
+              number: 80

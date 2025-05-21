@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: app-metrics
+  labels:
+    release: prom-stack
+spec:
+  selector:
+    matchLabels:
+      app: custom-app
+      metrics: enabled
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
